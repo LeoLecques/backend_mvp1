@@ -10,7 +10,7 @@ from schemas.ClienteSchemas import *
 from schemas.erroSchemas import ErrorSchema
 from flask_cors import CORS
 
-info = Info(title="CRM CORBAN INSS", version="1.0.0")
+info = Info(title="L² - GESTÃO DE CORBAN", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 
