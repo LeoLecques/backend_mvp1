@@ -72,7 +72,7 @@ def consultar_todos_clientes():
 @app.get('/cliente', tags=[cliente_tag],
          responses={"200": ClienteViewSchema})
 @app.get('/cliente', tags=[cliente_tag], responses={"200": ClienteViewSchema})
-def consulta_cliente():
+def consulta_cliente(query: ClienteBuscaSchema):
     """Faz a busca por um cliente a partir do cpf, email ou celular"""
     session = Session()
 
