@@ -29,20 +29,27 @@ def cadastra_cliente(body: ClienteSchema):
     """Realizar Cadastro de Cliente no Banco de Dados"""
     try:
         # Depurar o JSON recebido
-        form_data = request.json  # Acessa o corpo da requisição diretamente
+        form_data = request.json
         print("Dados recebidos: ", form_data)
 
         # Converte o JSON para o schema Pydantic
         form = ClienteSchema(**form_data)
 
+        # Validações manuais antes de instanciar
+        Cliente.valida_cpf(form.cpf)
+        Cliente.validate_celular(form.celular)
+        Cliente.valida_email(form.email)
+
+        # Instância do cliente com formatações
         cliente = Cliente(
-            cpf=form.cpf,
+            cpf=Cliente.formata_cpf(form.cpf),
             nome=form.nome,
-            data_nascimento=form.data_nascimento,
-            celular=form.celular,
+            data_nascimento=Cliente.formata_data(form.data_nascimento.strftime("%d/%m/%Y")),
+            celular=Cliente.formata_celular(form.celular),
             email=form.email,
             margem=form.margem
         )
+
         session = Session()
         session.add(cliente)
         session.commit()
